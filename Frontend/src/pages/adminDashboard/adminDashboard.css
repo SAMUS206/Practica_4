@@ -1,0 +1,43 @@
+.admin-dashboard {
+  width: 100%;
+  padding: 20px;
+}
+
+.dashboard-content h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.stat-item {
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.dashboard-shortcuts button {
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dashboard-shortcuts button:hover {
+  background-color: #0056b3;
+}
+
+.dashboard-alerts {
+  background: #ffcccb;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+}

@@ -1,0 +1,22 @@
+{
+    "posts": [
+        {
+            "id": "3",
+            "descripción": "Post de ejemplo",
+            "códigousuario": "123",
+            "categoría": "General",
+            "fechahora": "2024-04-23T12:00:00Z",
+            "anónimo": false,
+            "imagen": null
+        },
+        {
+          "id": "2",
+          "descripción": "Post de ejemplo",
+          "códigousuario": "123",
+          "categoría": "General",
+          "fechahora": "2024-04-23T12:00:00Z",
+          "anónimo": false,
+          "imagen": null
+      }
+    ]
+  }

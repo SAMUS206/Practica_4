@@ -1,0 +1,31 @@
+/* UserNavbar.css */
+.navbar {
+    background-color: #f8f9fa !important; /* Cambia el color de fondo si es necesario */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #007bff !important; /* Asegúrate de que el color de la marca sea visible y se ajuste a tu paleta */
+}
+
+.nav-link {
+    color: #007bff !important; /* Ajusta el color de los enlaces para que coincidan con la temática de tu sitio */
+}
+
+.btn-link {
+    top: 9px;
+    text-decoration: none;
+    
+    color: #dc3545 !important; /* Color para el botón de cerrar sesión, para que destaque como una acción importante */
+}
+.navbar-plus-icon {
+    cursor: pointer;
+    width: 24px; /* O el tamaño que prefieras */
+    height: 24px; /* O el tamaño que prefieras */
+    position: relative;
+    top:9px;
+    align-self: right;
+    /* Otros estilos si son necesarios */
+}

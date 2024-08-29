@@ -1,0 +1,74 @@
+.create-post-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 40px auto;
+  }
+  
+  .create-post-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .create-post-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .create-post-form label {
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .create-post-form input[type="text"],
+  .create-post-form select,
+  .create-post-form input[type="file"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .create-post-form input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  .create-post-form .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .create-post-form .form-group label {
+    flex-grow: 1;
+  }
+  
+  .create-post-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .create-post-button-publish {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .create-post-button-cancel {
+    background-color: #dc3545;
+    color: white;
+    margin-left: 10px;
+  }
+  
+  /* Asegúrate de agregar estilos responsivos */
+  @media (max-width: 768px) {
+    .create-post-container {
+      width: 90%;
+      margin: 20px auto;
+    }
+  }
+  

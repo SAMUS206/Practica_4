@@ -1,0 +1,13 @@
+{
+  "posts": [
+    {
+      "id": "3",
+      "descripción": "Otro Post de ejemplo",
+      "códigousuario": "456",
+      "categoría": "Especial",
+      "fechahora": "2024-04-24T12:00:00Z",
+      "anónimo": true,
+      "imagen": null
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+.user-details-view {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+  }
+  
+  .user-details-view h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .user-details-view form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .user-details-view label {
+    display: block;
+  }
+  
+  .user-details-view input[type="text"],
+  .user-details-view input[type="email"],
+  .user-details-view input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .user-details-view input[type="text"]:read-only,
+  .user-details-view input[type="email"]:read-only,
+  .user-details-view input[type="password"]:read-only {
+    background-color: #e9ecef;
+    color: #495057;
+  }
+  
+  .user-details-view button {
+    padding: 10px 15px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .user-details-view button:hover {
+    background-color: #0056b3;
+  }
+  

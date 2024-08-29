@@ -1,0 +1,22 @@
+/* Trending.css */
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.post {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 80%;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.post h3 {
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}

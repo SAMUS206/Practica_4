@@ -1,0 +1,59 @@
+{
+  "users": [
+    {
+      "username": "202300848",
+      "nombres": "Brayan",
+      "apellidos": "Garcia",
+      "genero": "Masculino",
+      "facultad": "Ingenieria",
+      "carrera": "Ciencias y Sistemas",
+      "mail": "2024067090116@ingenieria.usac.edu.gt",
+      "contraseña": "12345",
+      "isAdmin": true
+    },
+    {
+      "username": "202155555",
+      "nombres": "María",
+      "apellidos": "González",
+      "genero": "Femenino",
+      "facultad": "Ciencias Económicas",
+      "carrera": "Economía",
+      "mail": "maria.gonzalez@example.com",
+      "contraseña": "12345",
+      "isAdmin": false
+    },
+    {
+      "username": "202199999",
+      "nombres": "Carlos",
+      "apellidos": "Rodríguez",
+      "genero": "Masculino",
+      "facultad": "Ciencias Jurídicas y Sociales",
+      "carrera": "Derecho",
+      "mail": "carlos.rodriguez@example.com",
+      "contraseña": "12345678",
+      "isAdmin": false
+    },
+    {
+      "username": "202300814",
+      "nombres": "Laura",
+      "apellidos": "Martinez",
+      "genero": "Femenino",
+      "facultad": "Arquitectura",
+      "carrera": "Diseño Gráfico",
+      "mail": "laura.martinez@example.com",
+      "contraseña": "supersecure",
+      "isAdmin": false
+    },
+    {
+      "username": "1233798776",
+      "nombres": "Carlos",
+      "apellidos": "Rodríguez",
+      "genero": "Masculino",
+      "facultad": "Ciencias Jurídicas y Sociales",
+      "carrera": "Derecho",
+      "mail": "carlos.rodriguez@example.com",
+      "contraseña": "12345678",
+      "isAdmin": false
+    }
+  ]
+}

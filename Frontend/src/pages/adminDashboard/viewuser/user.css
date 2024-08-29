@@ -1,0 +1,63 @@
+.user-details-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+  }
+  
+  .user-details-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .user-details-container label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .user-details-container input[type="text"],
+  .user-details-container input[type="email"],
+  .user-details-container input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .user-details-container input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  button {
+    padding: 10px 15px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button[type="button"] {
+    background-color: #6c757d;
+  }
+  
+  button[type="button"]:hover {
+    background-color: #545b62;
+  }
+  
+  .user-details-container div {
+    text-align: right;
+    margin-top: 20px;
+  }
+  

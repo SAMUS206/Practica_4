@@ -1,0 +1,23 @@
+.nav {
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+  }
+  
+  .nav-link {
+    color: #007bff;
+    margin: 0 10px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .nav-link:hover, .nav-link.active {
+    color: #0056b3;
+  }
+  
+  .nav-link.btn {
+    border: none;
+    padding: 0;
+    background: none;
+  }
+  
