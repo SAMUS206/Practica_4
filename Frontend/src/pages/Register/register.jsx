@@ -76,7 +76,9 @@ function Register() {
                 confirmarContraseña: ''
             });
             
+            alert("Usuario registrado exitosamente", user.username)
             setTimeout(() => navigate('/login'), 200);
+            
         } catch (error) {
             console.error('Error al crear usuario:', error);
             setError(error.message);

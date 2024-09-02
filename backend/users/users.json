@@ -219,6 +219,72 @@
       "mail": "rmz@example.com",
       "contraseña": "12345",
       "isAdmin": false
+    },
+    {
+      "username": "202300824",
+      "nombres": "Alexander",
+      "apellidos": "Us",
+      "genero": "Masculino",
+      "facultad": "Ingeniería",
+      "carrera": "Sistemas",
+      "mail": "rmz@example.com",
+      "contraseña": "12345",
+      "isAdmin": true
+    },
+    {
+      "username": "2023008893",
+      "nombres": "Alexander",
+      "apellidos": "Us",
+      "genero": "Masculino",
+      "facultad": "Ingeniería",
+      "carrera": "Sistemas",
+      "mail": "rmz@example.com",
+      "contraseña": "12345",
+      "isAdmin": true
+    },
+    {
+      "username": "20230987923",
+      "nombres": "prueba",
+      "apellidos": "prueba",
+      "genero": "Otro",
+      "facultad": "Ingeneria",
+      "carrera": "Ciencias y sistemas",
+      "mail": "prueba.aaaa@example.com",
+      "contraseña": "12345",
+      "isAdmin": false
+    },
+    {
+      "username": "1234543252",
+      "nombres": "1234",
+      "apellidos": "12341",
+      "genero": "Otro",
+      "facultad": "2341",
+      "carrera": "234234",
+      "mail": "2341@gmail.com",
+      "contraseña": "12345",
+      "isAdmin": false
+    },
+    {
+      "username": "12345908",
+      "nombres": "1234",
+      "apellidos": "1234",
+      "genero": "Masculino",
+      "facultad": "1234",
+      "carrera": "1234",
+      "mail": "2341@gmail.com",
+      "contraseña": "1234",
+      "isAdmin": false
+    },
+    {
+      "username": "09809843529",
+      "nombres": "bra",
+      "apellidos": "23412",
+      "genero": "Femenino",
+      "facultad": "Ingenieria",
+      "carrera": "Ciencias y sistemas",
+      "mail": "emmagx.alv@gmail.com",
+      "contraseña": "12345",
+      "isAdmin": false
     }
   ]
 }
