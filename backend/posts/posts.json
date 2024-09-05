@@ -1,0 +1,229 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "descripción": "Post editado desde detalles Aaaaa dadaa",
+      "códigousuario": "202300848",
+      "categoría": "General",
+      "fechahora": "2024-04-23T12:00:00Z",
+      "anónimo": true,
+      "imagen": null,
+      "likes": 22,
+      "undefined": true
+    },
+    {
+      "id": 2,
+      "descripción": "Otro Post de ejemplo",
+      "códigousuario": "202300848",
+      "categoría": "Especial",
+      "fechahora": "2024-04-24T12:00:00Z",
+      "anónimo": true,
+      "imagen": null,
+      "likes": 16
+    },
+    {
+      "id": 3,
+      "descripción": "Primer post del sistema",
+      "códigousuario": "202300848",
+      "categoría": "General",
+      "fechahora": "2024-01-01T12:00:00Z",
+      "anónimo": false,
+      "imagen": null,
+      "likes": 4
+    },
+    {
+      "id": 5,
+      "descripción": "Aviso de eventos",
+      "códigousuario": "202300848",
+      "categoría": "Eventos",
+      "fechahora": "2024-01-03T14:00:00Z",
+      "anónimo": false,
+      "imagen": null,
+      "likes": 2
+    },
+    {
+      "id": 6,
+      "descripción": "Otro Post de ejemplo",
+      "códigousuario": "202300848",
+      "categoría": "Especial",
+      "fechahora": "2024-04-24T12:00:00Z",
+      "anónimo": true,
+      "imagen": null,
+      "likes": 5
+    },
+    {
+      "id": 7,
+      "descripción": "Primer post del sistema",
+      "códigousuario": "202300848",
+      "categoría": "General",
+      "fechahora": "2024-01-01T12:00:00Z",
+      "anónimo": false,
+      "imagen": null,
+      "likes": 1
+    },
+    {
+      "id": 8,
+      "descripción": "Segundo post importante",
+      "códigousuario": "202300848",
+      "categoría": "Noticias",
+      "fechahora": "2024-01-02T13:00:00Z",
+      "anónimo": true,
+      "imagen": "imagen2.jpg",
+      "likes": 8
+    },
+    {
+      "id": 9,
+      "descripción": "Aviso de eventos",
+      "códigousuario": "202300848",
+      "categoría": "Eventos",
+      "fechahora": "2024-01-03T14:00:00Z",
+      "anónimo": false,
+      "imagen": null,
+      "likes": 2
+    },
+    {
+      "id": 10,
+      "descripción": "Consejos de estudio",
+      "códigousuario": "202300848",
+      "categoría": "Educación",
+      "fechahora": "2024-01-04T15:00:00Z",
+      "anónimo": true,
+      "imagen": "imagen4.jpg",
+      "likes": 10
+    },
+    {
+      "id": 11,
+      "descripción": "Resumen del día",
+      "códigousuario": "202300848",
+      "categoría": "Resumen",
+      "fechahora": "2024-01-05T16:00:00Z",
+      "anónimo": false,
+      "imagen": null,
+      "likes": 6
+    },
+    {
+      "id": 12,
+      "descripción": "Post Desde crear post",
+      "códigousuario": "202200128",
+      "categoría": "Fun",
+      "fechahora": "2024-04-26T19:07:54.034Z",
+      "anónimo": false,
+      "imagen": null,
+      "likes": 0
+    },
+    {
+      "códigousuario": "213987654",
+      "descripción": "Explorando la subida masiva",
+      "categoría": "Fun",
+      "anónimo": false,
+      "fechahora": "2024-04-26T14:30:38-06:00",
+      "id": 13
+    },
+    {
+      "códigousuario": "213987654",
+      "descripción": "Segundo post masivo",
+      "categoría": "Especial",
+      "anónimo": true,
+      "fechahora": "2024-04-26T14:30:38-06:00",
+      "id": 14
+    },
+    {
+      "códigousuario": "213987654",
+      "descripción": "Integración de funcionalidades",
+      "categoría": "Fun",
+      "anónimo": false,
+      "fechahora": "2024-04-26T14:30:38-06:00",
+      "id": 15
+    },
+    {
+      "códigousuario": "213987654",
+      "descripción": "Novedades en la plataforma",
+      "categoría": "Fun",
+      "anónimo": true,
+      "fechahora": "2024-04-26T14:30:38-06:00",
+      "id": 16
+    },
+    {
+      "id": 17,
+      "descripción": "hola con fecha correcta",
+      "códigousuario": "202200128",
+      "categoría": "Eventos",
+      "fechahora": "2024-04-26T14:32:28-06:00",
+      "anónimo": false,
+      "imagen": null,
+      "likes": 0
+    },
+    {
+      "id": 18,
+      "descripción": "klsjfalkjas",
+      "códigousuario": "202200128",
+      "categoría": "Noticias",
+      "fechahora": "2024-04-26T22:56:44-06:00",
+      "anónimo": false,
+      "imagen": null,
+      "likes": 1
+    },
+    {
+      "id": 19,
+      "descripción": "Descripción del post",
+      "códigousuario": "1",
+      "categoría": "General",
+      "fechahora": "2024-04-27T19:27:52-06:00",
+      "anónimo": false,
+      "imagen": null,
+      "likes": 1
+    },
+    {
+      "códigousuario": "20240001",
+      "descripción": "Hoy inician las clase en la Facultad",
+      "categoría": "Anuncio Importante",
+      "anónimo": false,
+      "fechahora": "2024-04-28T09:50:13-06:00",
+      "id": 19
+    },
+    {
+      "códigousuario": "20240002",
+      "descripción": "Cuando sera el partido??",
+      "categoría": "Divertido",
+      "anónimo": true,
+      "fechahora": "2024-04-28T09:50:13-06:00",
+      "id": 20
+    },
+    {
+      "códigousuario": "20240003",
+      "descripción": "¿Alguien sabe si habrá actividades deportivas este fin de semana?",
+      "categoría": "Académico",
+      "anónimo": false,
+      "fechahora": "2024-04-28T09:50:13-06:00",
+      "id": 21
+    },
+    {
+      "códigousuario": "20240004",
+      "descripción": "¿Qué opinan sobre la nueva cafetería de la facultad?",
+      "categoría": "Variedad",
+      "anónimo": true,
+      "fechahora": "2024-04-28T09:50:13-06:00",
+      "id": 22
+    },
+    {
+      "id": 23,
+      "descripción": "post de prueba 1",
+      "códigousuario": "202300849",
+      "categoría": "Académico",
+      "fechahora": "2024-04-28T09:58:28-06:00",
+      "anónimo": false,
+      "imagen": null,
+      "likes": 1
+    },
+    {
+      "id": 24,
+      "descripción": "Post de prueba no 2",
+      "códigousuario": "202300849",
+      "categoría": "Académico",
+      "fechahora": "2024-04-28T09:59:00-06:00",
+      "anónimo": true,
+      "imagen": null,
+      "likes": 3
+    }
+  ]
+}

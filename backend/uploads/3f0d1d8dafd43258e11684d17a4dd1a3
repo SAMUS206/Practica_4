@@ -1,0 +1,170 @@
+{
+  "users": [
+    {
+      "username": "1233",
+      "nombres": "Brayan",
+      "apellidos": "Garcia",
+      "genero": "Masculino",
+      "facultad": "Ingenieria",
+      "carrera": "Ciencias y Sistemas",
+      "mail": "2024067090116@ingenieria.usac.edu.gt",
+      "contraseña": "12345",
+      "isAdmin": true
+    },
+    {
+      "username": "214325323",
+      "nombres": "María",
+      "apellidos": "González",
+      "genero": "Femenino",
+      "facultad": "Ciencias Económicas",
+      "carrera": "Economía",
+      "mail": "maria.gonzalez@example.com",
+      "contraseña": "12345",
+      "isAdmin": false
+    },
+    {
+      "username": "12341233",
+      "nombres": "Carlos",
+      "apellidos": "Rodríguez",
+      "genero": "Masculino",
+      "facultad": "Ciencias Jurídicas y Sociales",
+      "carrera": "Derecho",
+      "mail": "carlos.rodriguez@example.com",
+      "contraseña": "12345678",
+      "isAdmin": false
+    },
+    {
+      "username": "2026432145745300814",
+      "nombres": "Laura",
+      "apellidos": "Martinez",
+      "genero": "Femenino",
+      "facultad": "Arquitectura",
+      "carrera": "Diseño Gráfico",
+      "mail": "laura.martinez@example.com",
+      "contraseña": "supersecure",
+      "isAdmin": false
+    },
+    {
+      "username": "456341254",
+      "nombres": "Prueba",
+      "apellidos": "Martinez",
+      "genero": "Femenino",
+      "facultad": "Arquitectura",
+      "carrera": "Diseño Gráfico",
+      "mail": "laura.martinez@example.com",
+      "contraseña": "supersecure",
+      "isAdmin": false
+    },
+    {
+      "username": "1265646",
+      "nombres": "Brayan",
+      "apellidos": "Garcia",
+      "genero": "Masculino",
+      "facultad": "Ingenieria",
+      "carrera": "Ciencias y Sistemas",
+      "mail": "2024067090116@ingenieria.usac.edu.gt",
+      "contraseña": "12345",
+      "isAdmin": true
+    },
+    {
+      "username": "213987654",
+      "nombres": "María",
+      "apellidos": "González",
+      "genero": "Femenino",
+      "facultad": "Ciencias Económicas",
+      "carrera": "Economía",
+      "mail": "maria.gonzalez@example.com",
+      "contraseña": "12345",
+      "isAdmin": false
+    },
+    {
+      "username": "12363545",
+      "nombres": "Carlos",
+      "apellidos": "Rodríguez",
+      "genero": "Masculino",
+      "facultad": "Ciencias Jurídicas y Sociales",
+      "carrera": "Derecho",
+      "mail": "carlos.rodriguez@example.com",
+      "contraseña": "12345678",
+      "isAdmin": false
+    },
+    {
+      "username": "202657453008634514",
+      "nombres": "Laura",
+      "apellidos": "Martinez",
+      "genero": "Femenino",
+      "facultad": "Arquitectura",
+      "carrera": "Diseño Gráfico",
+      "mail": "laura.martinez@example.com",
+      "contraseña": "supersecure",
+      "isAdmin": false
+    },
+    {
+      "username": "4556345346",
+      "nombres": "Prueba",
+      "apellidos": "Martinez",
+      "genero": "Femenino",
+      "facultad": "Arquitectura",
+      "carrera": "Diseño Gráfico",
+      "mail": "laura.martinez@example.com",
+      "contraseña": "supersecure",
+      "isAdmin": false
+    },
+    {
+      "username": "1267458",
+      "nombres": "Brayan",
+      "apellidos": "Garcia",
+      "genero": "Masculino",
+      "facultad": "Ingenieria",
+      "carrera": "Ciencias y Sistemas",
+      "mail": "2024067090116@ingenieria.usac.edu.gt",
+      "contraseña": "12345",
+      "isAdmin": true
+    },
+    {
+      "username": "21389677",
+      "nombres": "María",
+      "apellidos": "González",
+      "genero": "Femenino",
+      "facultad": "Ciencias Económicas",
+      "carrera": "Economía",
+      "mail": "maria.gonzalez@example.com",
+      "contraseña": "12345",
+      "isAdmin": false
+    },
+    {
+      "username": "1233798776",
+      "nombres": "Carlos",
+      "apellidos": "Rodríguez",
+      "genero": "Masculino",
+      "facultad": "Ciencias Jurídicas y Sociales",
+      "carrera": "Derecho",
+      "mail": "carlos.rodriguez@example.com",
+      "contraseña": "12345678",
+      "isAdmin": false
+    },
+    {
+      "username": "202657453023650814",
+      "nombres": "Laura",
+      "apellidos": "Martinez",
+      "genero": "Femenino",
+      "facultad": "Arquitectura",
+      "carrera": "Diseño Gráfico",
+      "mail": "laura.martinez@example.com",
+      "contraseña": "supersecure",
+      "isAdmin": false
+    },
+    {
+      "username": "434576356",
+      "nombres": "Prueba",
+      "apellidos": "Martinez",
+      "genero": "Femenino",
+      "facultad": "Arquitectura",
+      "carrera": "Diseño Gráfico",
+      "mail": "laura.martinez@example.com",
+      "contraseña": "supersecure",
+      "isAdmin": false
+    }
+    
+  ]
+}

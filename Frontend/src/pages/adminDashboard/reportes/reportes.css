@@ -1,0 +1,48 @@
+/* Estilos para la página de reportes */
+.report-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+/* Contenedor para las gráficas */
+.charts-container {
+    display: flex;
+    justify-content: space-around; /* Centra los gráficos horizontalmente */
+    align-items: flex-start; /* Alinea los gráficos al inicio del contenedor */
+    flex-wrap: nowrap; /* Evita que los gráficos se apilen verticalmente */
+    width: 100%;
+    max-width: 1200px; /* Ajusta al ancho máximo deseado */
+}
+
+/* Estilo individual de cada gráfica */
+.chart-box {
+    display: inline-block;
+    flex-direction: column; /* Para apilar el título y el gráfico */
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: white;
+    border-radius: 8px;
+    width: 300px; /* Ancho fijo para cada gráfico */
+}
+
+.chart-title {
+    font-size: 1em; /* Tamaño del título del gráfico */
+    margin-bottom: 10px;
+}
+
+@media (max-width: 1024px) {
+    .chart-box {
+        width: calc(50% - 20px); /* Dos gráficos por fila en pantallas más pequeñas */
+    }
+}
+
+@media (max-width: 768px) {
+    .chart-box {
+        width: 100%; /* Una gráfica por fila en pantallas más pequeñas */
+    }
+}

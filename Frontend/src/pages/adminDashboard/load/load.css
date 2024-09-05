@@ -1,0 +1,115 @@
+/* Estilos para el contenedor principal */
+.admin-dashboard {
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilos para las pestañas */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+    background-color: #f8f8f8;
+    transition: background-color 0.3s ease;
+  }
+  
+  .tab.active {
+    background-color: #ddd;
+    border-bottom: 2px solid #007bff; /* Color de resalte para la pestaña activa */
+  }
+  
+  /* Estilos para la sección de carga masiva */
+  .mass-upload {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .mass-upload h2 {
+    margin-bottom: 10px;
+    color: #007bff;
+  }
+  
+  /* Botón para cargar archivos */
+  .mass-upload button {
+    margin-top: 10px;
+    padding: 5px 20px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .mass-upload button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilos para la tabla */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
+  }
+  
+  th, td {
+    padding: 9px;
+    border: 3px solid #ccc; /* Bordes para celdas */
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f4f4f4; /* Fondo para los encabezados de la tabla */
+    color: #333;
+    font-weight: bold;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #fbfbfb; /* Alternar colores para las filas */
+  }
+  
+  tr:hover {
+    background-color: #f1f1f1; /* Color de fondo al pasar el mouse */
+  }
+  
+  /* Añadiendo estilos a la cabecera de la tabla para separarla del cuerpo */
+  thead {
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Mejorando la visibilidad del cursor sobre los elementos clicables */
+  .cursor-pointer {
+    cursor: pointer;
+  }
+  
+  /* Botón para cargar archivos con un poco más de estilo */
+  .mass-upload button {
+    margin-top: 10px;
+    padding: 5px 20px;
+    background-color: #5cb85c; /* Color verde para el botón */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .mass-upload button:hover {
+    background-color: #4cae4c; /* Un verde un poco más oscuro al pasar el mouse */
+  }
+  

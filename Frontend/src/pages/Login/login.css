@@ -1,0 +1,64 @@
+.login-container {
+    position: relative; /* Posicionamiento relativo para el posicionamiento absoluto de los hijos */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #fff;
+}
+
+.login-form {
+    
+    margin: auto; /* Centra el formulario en la página si no hay .login-container */
+    padding: 20px;
+    background-color: #ffffff; /* Fondo blanco como en register-form */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave como en register-form */
+    width: 600px; /* Ancho fijo para el formulario */
+    max-width: 90%; /* Porcentaje del ancho del viewport para que sea responsivo */
+}
+
+.login-form-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333333; /* Texto oscuro como en register-form */
+    font-weight: 600; /* Fuente en negrita como en register-form */
+}
+
+.login-form-input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc; /* Borde de color gris claro como en register-form */
+    border-radius: 4px;
+    color: #333333; /* Texto oscuro para legibilidad como en register-form */
+    background-color: #ffffff; /* Fondo blanco para los inputs como en register-form */
+}
+
+.login-form-button {
+    width:  90%; /* Usa el ancho completo para mantener la consistencia con los campos */
+    padding: 12px; /* Ajuste de padding para mejor proporción */
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff; /* Un celeste más vivo para el botón como en register-form */
+    color: white; /* Color del texto en blanco como en register-form */
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.login-form-button:hover {
+    background-color: #0056b3; /* Un tono más claro de celeste para el hover como en register-form */
+}
+
+.login-background-image {
+        position: absolute; /* Posicionamiento absoluto para ubicarlo sobre el formulario */
+        top: 50px; /* Ajusta la posición como sea necesario */
+        left: 50%; /* Centrar horizontalmente */
+        transform: translateX(-50%); /* Ajuste fino para centrar exactamente */
+        width: 150px; /* Ancho más grande para el logo */
+        height: auto; /* Altura automática para mantener la proporción */
+        border-radius: 10px; /* Redondear las esquinas de la imagen */
+        z-index: 10;
+}

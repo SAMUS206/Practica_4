@@ -1,0 +1,290 @@
+{
+  "users": [
+    {
+      "username": "202300848",
+      "nombres": "Juan Actualizado",
+      "apellidos": "Pérez Gómez",
+      "genero": "Masculino",
+      "facultad": "Ingenieria",
+      "carrera": "Ciencias y Sistemas",
+      "mail": "2024067090116@ingenieria.usac.edu.gt",
+      "contraseña": "12345",
+      "isAdmin": true
+    },
+    {
+      "username": "214325323",
+      "nombres": "María",
+      "apellidos": "González",
+      "genero": "Femenino",
+      "facultad": "Ciencias Económicas",
+      "carrera": "Economía",
+      "mail": "maria.gonzalez@example.com",
+      "contraseña": "12345",
+      "isAdmin": false
+    },
+    {
+      "username": "12341233",
+      "nombres": "Carlos",
+      "apellidos": "Rodríguez",
+      "genero": "Masculino",
+      "facultad": "Ciencias Jurídicas y Sociales",
+      "carrera": "Derecho",
+      "mail": "carlos.rodriguez@example.com",
+      "contraseña": "12345678",
+      "isAdmin": false
+    },
+    {
+      "username": "2026432145745300814",
+      "nombres": "Laura",
+      "apellidos": "Martinez",
+      "genero": "Femenino",
+      "facultad": "Arquitectura",
+      "carrera": "Diseño Gráfico",
+      "mail": "laura.martinez@example.com",
+      "contraseña": "supersecure",
+      "isAdmin": false
+    },
+    {
+      "username": "1265646",
+      "nombres": "Brayan Emanuel",
+      "apellidos": "Garcia",
+      "genero": "Masculino",
+      "facultad": "Ingenieria",
+      "carrera": "Ciencias y Sistemas",
+      "mail": "2024067090116@ingenieria.usac.edu.gt",
+      "contraseña": "12345",
+      "isAdmin": true
+    },
+    {
+      "username": "213987654",
+      "nombres": "María",
+      "apellidos": "González",
+      "genero": "Femenino",
+      "facultad": "Ciencias Económicas",
+      "carrera": "Economía",
+      "mail": "maria.gonzalez@example.com",
+      "contraseña": "12345",
+      "isAdmin": false
+    },
+    {
+      "username": "12363545",
+      "nombres": "Carlos",
+      "apellidos": "Rodríguez",
+      "genero": "Masculino",
+      "facultad": "Ciencias Jurídicas y Sociales",
+      "carrera": "Derecho",
+      "mail": "carlos.rodriguez@example.com",
+      "contraseña": "12345678",
+      "isAdmin": false
+    },
+    {
+      "username": "4556345346",
+      "nombres": "Prueba",
+      "apellidos": "Martinez",
+      "genero": "Femenino",
+      "facultad": "Arquitectura",
+      "carrera": "Diseño Gráfico",
+      "mail": "laura.martinez@example.com",
+      "contraseña": "supersecure",
+      "isAdmin": false
+    },
+    {
+      "username": "1267458",
+      "nombres": "Brayan",
+      "apellidos": "Garcia",
+      "genero": "Masculino",
+      "facultad": "Ingenieria",
+      "carrera": "Ciencias y Sistemas",
+      "mail": "2024067090116@ingenieria.usac.edu.gt",
+      "contraseña": "12345",
+      "isAdmin": true
+    },
+    {
+      "username": "21389677",
+      "nombres": "María",
+      "apellidos": "González",
+      "genero": "Femenino",
+      "facultad": "Ciencias Económicas",
+      "carrera": "Economía",
+      "mail": "maria.gonzalez@example.com",
+      "contraseña": "12345",
+      "isAdmin": false
+    },
+    {
+      "username": "1233798776",
+      "nombres": "Carlos",
+      "apellidos": "Rodríguez",
+      "genero": "Masculino",
+      "facultad": "Ciencias Jurídicas y Sociales",
+      "carrera": "Derecho",
+      "mail": "carlos.rodriguez@example.com",
+      "contraseña": "12345678",
+      "isAdmin": false
+    },
+    {
+      "username": "202200128",
+      "nombres": "Emanuel",
+      "apellidos": "Garcia",
+      "genero": "Masculino ",
+      "facultad": "Ingenieria",
+      "carrera": "Ciencias y Sistemas ",
+      "mail": "ema@prueeeba.com",
+      "contraseña": "Madelin1",
+      "isAdmin": false
+    },
+    {
+      "username": "234214",
+      "nombres": "brayan",
+      "apellidos": "Emanuel",
+      "genero": "Femenino",
+      "facultad": "Ingenieria",
+      "carrera": "Ciencias y Sistemas",
+      "mail": "a@a.com",
+      "contraseña": "1234",
+      "isAdmin": false
+    },
+    {
+      "username": "1234546613",
+      "nombres": "Laura",
+      "apellidos": "Garcia",
+      "genero": "Femenino",
+      "facultad": "arquitectura",
+      "carrera": "Diseño Gráfico",
+      "mail": "laura.martinez@example.com",
+      "contraseña": "supersecure",
+      "isAdmin": false
+    },
+    {
+      "username": "1",
+      "nombres": "Prueba",
+      "apellidos": "11",
+      "genero": "Otro",
+      "facultad": "123",
+      "carrera": "231",
+      "mail": "231@bt.com",
+      "contraseña": "123",
+      "isAdmin": false
+    },
+    {
+      "username": "20240001",
+      "nombres": "Alberto Juan",
+      "apellidos": "Perez López",
+      "genero": "Masculino",
+      "facultad": "Arquitectura",
+      "carrera": "Diseño Gráfica",
+      "mail": "albertlop@gmail.com",
+      "contraseña": "Albert123-",
+      "isAdmin": false
+    },
+    {
+      "username": "20240002",
+      "nombres": "María José",
+      "apellidos": "Martínez Pérez",
+      "genero": "Femenino",
+      "facultad": "Ingeniería",
+      "carrera": "Ingeniería Civil",
+      "mail": "mjmartinez@gmail.com",
+      "contraseña": "Mj1234@",
+      "isAdmin": false
+    },
+    {
+      "username": "20240003",
+      "nombres": "Carlos Alberto",
+      "apellidos": "Fernández Rodríguez",
+      "genero": "Masculino",
+      "facultad": "Ciencias",
+      "carrera": "Biología",
+      "mail": "caferod@gmail.com",
+      "contraseña": "Cafero567#",
+      "isAdmin": false
+    },
+    {
+      "username": "202300849",
+      "nombres": "Usuario",
+      "apellidos": "Prueba",
+      "genero": "Masculino",
+      "facultad": "Ingeneria",
+      "carrera": "Ciencias y sistemas",
+      "mail": "a@example.com",
+      "contraseña": "Holamundo1*",
+      "isAdmin": false
+    },
+    {
+      "username": "202010033",
+      "nombres": "Rodolfo",
+      "apellidos": "Morales",
+      "genero": "Masculino",
+      "facultad": "Ingeniería",
+      "carrera": "Sistemas",
+      "mail": "rmz@example.com",
+      "contraseña": "12345",
+      "isAdmin": false
+    },
+    {
+      "username": "202300824",
+      "nombres": "Alexander",
+      "apellidos": "Us",
+      "genero": "Masculino",
+      "facultad": "Ingeniería",
+      "carrera": "Sistemas",
+      "mail": "rmz@example.com",
+      "contraseña": "12345",
+      "isAdmin": true
+    },
+    {
+      "username": "2023008893",
+      "nombres": "Alexander",
+      "apellidos": "Us",
+      "genero": "Masculino",
+      "facultad": "Ingeniería",
+      "carrera": "Sistemas",
+      "mail": "rmz@example.com",
+      "contraseña": "12345",
+      "isAdmin": true
+    },
+    {
+      "username": "20230987923",
+      "nombres": "prueba",
+      "apellidos": "prueba",
+      "genero": "Otro",
+      "facultad": "Ingeneria",
+      "carrera": "Ciencias y sistemas",
+      "mail": "prueba.aaaa@example.com",
+      "contraseña": "12345",
+      "isAdmin": false
+    },
+    {
+      "username": "1234543252",
+      "nombres": "1234",
+      "apellidos": "12341",
+      "genero": "Otro",
+      "facultad": "2341",
+      "carrera": "234234",
+      "mail": "2341@gmail.com",
+      "contraseña": "12345",
+      "isAdmin": false
+    },
+    {
+      "username": "12345908",
+      "nombres": "1234",
+      "apellidos": "1234",
+      "genero": "Masculino",
+      "facultad": "1234",
+      "carrera": "1234",
+      "mail": "2341@gmail.com",
+      "contraseña": "1234",
+      "isAdmin": false
+    },
+    {
+      "username": "09809843529",
+      "nombres": "bra",
+      "apellidos": "23412",
+      "genero": "Femenino",
+      "facultad": "Ingenieria",
+      "carrera": "Ciencias y sistemas",
+      "mail": "emmagx.alv@gmail.com",
+      "contraseña": "12345",
+      "isAdmin": false
+    }
+  ]
+}
