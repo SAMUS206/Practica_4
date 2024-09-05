@@ -296,6 +296,17 @@
       "mail": "juan.perez@example.com",
       "contraseña": "$2b$10$OyvRA27uSmWg7tMsDX2I1ecijSq24qJuqJ7sHg/kQxROFapLJssAG",
       "isAdmin": false
+    },
+    {
+      "username": "10900",
+      "nombres": "Juan",
+      "apellidos": "Pérez",
+      "genero": "m",
+      "facultad": "Ingeniería",
+      "carrera": "Sistemas",
+      "mail": "juan.perez@example.com",
+      "contraseña": "$2b$10$OyvRA27uSmWg7tMsDX2I1ecijSq24qJuqJ7sHg/kQxROFapLJssAG",
+      "isAdmin": false
     }
     ]
 }
