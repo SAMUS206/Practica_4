@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
 import fs from 'fs';
+import bcrypt from 'bcrypt';
+
 import { cargarUsuarios, crearUsuario, obtenerUsuarios, actualizarUsuario, eliminarUsuario } from './users/usuarios.js';
 import { actualizarPostLike, obtenerCategorias, cargarPosts, crearPost, obtenerPosts, actualizarPost, eliminarPost } from './posts/posts.js';
 import { cargarComentarios, guardarComentarios, crearComentario, obtenerComentariosPorPost} from './posts/comentarios.js';
@@ -89,17 +91,23 @@ app.delete('/users/:username', async (req, res) => {
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   const usuarios = await cargarUsuarios();
-  const user = usuarios.find(u => u.username === username && u.contraseña === password);
+  const user = usuarios.find(u => u.username === username);
   
   if (user) {
 
-    res.status(200).json({
-      message: 'Inicio de sesión exitoso',
-      isAdmin: user.isAdmin,
-      username: user.username  
+    const validPassword = await bcrypt.compare(password, user.contraseña)
+
+    if (validPassword) {
+      return res.status(200).json({
+        message: 'Inicio de sesión exitoso',
+        isAdmin: user.isAdmin,
+        username: user.username  
     });
-  } else {
+  }
+   
+  else {
     res.status(401).json({ error: 'Inicio de sesión fallido. Usuario o contraseña incorrectos.' });
+  }
   }
 });
 

@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { readFile, writeFile } from 'fs/promises';
 const archivoUsuarios = 'users/users.json'; 
 
@@ -30,10 +31,15 @@ export async function crearUsuario(usuario) {
     throw new Error(`El usuario con username ${usuario.username} ya existe.`);
   }
 
+  // Hashear la contraseña
+  const hashedPassword = await bcrypt.hash(usuario.contraseña, 10);
+  usuario.contraseña = hashedPassword;
+
   usuarios.push(usuario);
   await guardarUsuarios(usuarios);
   return usuario;
 }
+
 
 
 
