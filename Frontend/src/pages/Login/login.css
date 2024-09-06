@@ -57,7 +57,7 @@
         top: 50px; /* Ajusta la posición como sea necesario */
         left: 50%; /* Centrar horizontalmente */
         transform: translateX(-50%); /* Ajuste fino para centrar exactamente */
-        width: 150px; /* Ancho más grande para el logo */
+        width: 350px; /* Ancho más grande para el logo */
         height: auto; /* Altura automática para mantener la proporción */
         border-radius: 10px; /* Redondear las esquinas de la imagen */
         z-index: 10;
