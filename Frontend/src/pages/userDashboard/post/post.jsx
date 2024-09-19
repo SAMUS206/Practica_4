@@ -9,7 +9,7 @@
       'descripcion': '',
       'categoria': '',
       'anonimo': false,
-      'imagen': null,
+      'image': null,
     });
     const [categorias, setCategorias] = useState([]);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -112,7 +112,7 @@
             <input
               className="create-post-file-input"
               type="file"
-              name="image"
+              name="imagen"
               onChange={handleChange}
             />
             <div className="create-post-actions">
