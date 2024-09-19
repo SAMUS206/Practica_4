@@ -163,6 +163,14 @@ function UserHome() {
                 <span className="comment-count">Comentarios: {post.commentCount}</span>
               </div>
             </div>
+
+            {/* Muestra la imagen si existe */}
+            {post.imagen && (
+              <div className="post-image">
+                <img src={`http://localhost:3000/${post.imagen}`} alt="Imagen del post" />
+              </div>
+            )}
+
             <p className="post-description">{post.descripcion}</p>
             <div className="post-actions">
               <button
