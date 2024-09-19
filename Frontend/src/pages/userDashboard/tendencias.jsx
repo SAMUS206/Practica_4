@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import UserNavbar from '../../components/NavBar';
 import moment from 'moment'; // Asegúrate de tener moment instalado
 import './tendencias.css';
+import { Link } from 'react-router-dom';
 
 function Trending() {
     const [posts, setPosts] = useState([]);
@@ -84,13 +85,13 @@ function Trending() {
     }, []);
 
     const handleLike = async (postId) => {
-        if (likedPosts[postId]) {
+        if (likedPosts[postId] && Array.isArray(likedPosts[postId])) {
             console.log('Ya diste like a este post');
             return;
         }
-
+      
         try {
-            const username = localStorage.getItem('username');
+            const username = localStorage.getItem('userId');
             const response = await fetch('http://localhost:3000/posts/like', {
                 method: 'POST',
                 headers: {
@@ -99,11 +100,12 @@ function Trending() {
                 },
                 body: JSON.stringify({ postId, username })
             });
-
+      
             if (response.ok) {
                 const updatedPost = await response.json();
+                console.log('Like agregado:', updatedPost);
                 setPosts(prevPosts => prevPosts.map(p => p.id === postId ? { ...p, likes: updatedPost.likeCount } : p));
-                setLikedPosts(prev => ({ ...prev, [postId]: true }));
+                setLikedPosts(prev => ({ ...prev, [postId]: updatedPost.likedUsers || [] }));
             } else {
                 console.error('No se pudo dar like al post');
             }
@@ -153,60 +155,67 @@ function Trending() {
 
     return (
         <div>
-            <UserNavbar />
-            <h1 className='titulo-tendencias'>Tendencias</h1>
-            <div className="posts-container">
-                {posts.map(post => (
-                    <div key={post.id} className="post">
-                        <div className="post-header">
-                            <h5 className="user-name">{getUserName(post.username, post.anónimo)}</h5>
-                            <div className="post-metadata">
-                                <span className="post-fechaHora">
-                                    {moment(post.created_at).format('LLL')}
-                                </span>
-                                <span className="post-category">{post.categoria}</span>
-                                <span className="comment-count">Comentarios: {post.commentCount}</span>
-                            </div>
+          <UserNavbar />
+          <h1 className='titulo-tendencias'>Tendencias</h1>
+          <div className="posts-container">
+            {posts.map(post => (
+              <div key={post.id} className="post">
+                <div className="post-header">
+                  <h5 className="user-name">
+                    {post.anónimo ? 'Anónimo' : (
+                      <Link to={`/user/${post.username}`}>
+                        {users[post.username]?.nombres || 'Usuario Desconocido'}
+                      </Link>
+                    )}
+                  </h5>
+                  <div className="post-metadata">
+                    <span className="post-fechaHora">
+                      {moment(post.created_at).format('LLL')}
+                    </span>
+                    <span className="post-category">{post.categoria}</span>
+                    <span className="comment-count">Comentarios: {post.commentCount}</span>
+                  </div>
+                </div>
+                <p className="post-description">{post.descripcion}</p>
+                <div className="post-actions">
+                  <button
+                    className="like-button"
+                    onClick={() => handleLike(post.id)}
+                    disabled={likedPosts[post.id] && likedPosts[post.id].includes(localStorage.getItem('username'))}
+                  >
+                    {post.likes} Me gusta
+                  </button>
+                  <span className="like-users">Likes: {likedPosts[post.id]?.length || 0}</span>
+                  <button
+                    className="comment-button"
+                    onClick={() => handleCommentClick(post.id)}
+                  >
+                    Comentar
+                  </button>
+                </div>
+      
+                {showCommentsForPostId === post.id && (
+                  <div className="comments-section">
+                    {comments[post.id] && comments[post.id].length > 0 ? (
+                      comments[post.id].map(comment => (
+                        <div key={comment.id} className="comment">
+                          <span>{getUserName(comment.username, false)} - {comment.texto} - {moment(comment.timestamp).format('LLL')}</span>
                         </div>
-                        <p className="post-description">{post.descripcion}</p>
-                        <div className="post-actions">
-                            <button
-                                className="like-button"
-                                onClick={() => handleLike(post.id)}
-                                disabled={likedPosts[post.id]}
-                            >
-                                {post.likes} Me gusta
-                            </button>
-                            <span className="like-users">Likes: {likedPosts[post.id]?.length || 0}</span>
-                            <button
-                                className="comment-button"
-                                onClick={() => handleCommentClick(post.id)}
-                            >
-                                Comentar
-                            </button>
-                        </div>
-                        {showCommentsForPostId === post.id && (
-                            <div className="comments-section">
-                                {comments[post.id] && comments[post.id].length > 0 ? (
-                                    comments[post.id].map(comment => (
-                                        <div key={comment.id} className="comment">
-                                            <span>{getUserName(comment.username, false)} - {comment.texto} - {moment(comment.timestamp).format('LLL')}</span>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <p>Sin comentarios</p>
-                                )}
-                                <form onSubmit={(event) => handleNewComment(event, post.id)}>
-                                    <input type="text" placeholder="Añadir un comentario" required />
-                                    <button type="submit">Enviar</button>
-                                </form>
-                            </div>
-                        )}
-                    </div>
-                ))}
-            </div>
+                      ))
+                    ) : (
+                      <p>Sin comentarios</p>
+                    )}
+                    <form onSubmit={(event) => handleNewComment(event, post.id)}>
+                      <input type="text" placeholder="Añadir un comentario" required />
+                      <button type="submit">Enviar</button>
+                    </form>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-    );
+      );
 }
 
 export default Trending;

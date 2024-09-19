@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import UserNavbar from '../../components/NavBar';
+import { Link } from 'react-router-dom';
 import moment from 'moment'; // Asegúrate de tener moment instalado
 import './inicio.css';
+import'./post/post';
 
 function UserHome() {
   const [posts, setPosts] = useState([]);
@@ -68,11 +70,11 @@ function UserHome() {
   
 
   const handleLike = async (postId) => {
-    if (likedPosts[postId]) {
+    if (likedPosts[postId] && Array.isArray(likedPosts[postId])) {
         console.log('Ya diste like a este post');
         return;
     }
-
+  
     try {
         const username = localStorage.getItem('userId');
         const response = await fetch('http://localhost:3000/posts/like', {
@@ -83,19 +85,20 @@ function UserHome() {
             },
             body: JSON.stringify({ postId, username })
         });
-
+  
         if (response.ok) {
             const updatedPost = await response.json();
             console.log('Like agregado:', updatedPost);
             setPosts(prevPosts => prevPosts.map(p => p.id === postId ? { ...p, likes: updatedPost.likeCount } : p));
-            setLikedPosts(prev => ({ ...prev, [postId]: true }));
+            setLikedPosts(prev => ({ ...prev, [postId]: updatedPost.likedUsers || [] }));
         } else {
             console.error('No se pudo dar like al post');
         }
     } catch (error) {
         console.error('Error al dar like:', error);
     }
-};
+  };
+  
 
 
   const handleCommentClick = (postId) => {
@@ -145,7 +148,13 @@ function UserHome() {
         {posts.map(post => (
           <div key={post.id} className="post">
             <div className="post-header">
-              <h5 className="user-name">{getUserName(post.username, post.anónimo)}</h5>
+              <h5 className="user-name">
+                {post.anónimo ? 'Anónimo' : (
+                  <Link to={`/user/${post.username}`}>
+                    {users[post.username]?.nombres || 'Usuario Desconocido'}
+                  </Link>
+                )}
+              </h5>
               <div className="post-metadata">
                 <span className="post-fechaHora">
                   {moment(post.created_at).format('LLL')}
@@ -156,22 +165,22 @@ function UserHome() {
             </div>
             <p className="post-description">{post.descripcion}</p>
             <div className="post-actions">
-                <button
-                  className="like-button"
-                  onClick={() => handleLike(post.id)}
-                  disabled={likedPosts[post.id] && likedPosts[post.id].includes(localStorage.getItem('username'))}
-                >
-                  {post.likes} Me gusta
-                </button>
-                <span className="like-users">Likes: {likedPosts[post.id]?.length || 0}</span>
-                <button
-                  className="comment-button"
-                  onClick={() => handleCommentClick(post.id)}
-                >
-                  Comentar
-                </button>
-              </div>
-
+              <button
+                className="like-button"
+                onClick={() => handleLike(post.id)}
+                disabled={likedPosts[post.id] && likedPosts[post.id].includes(localStorage.getItem('username'))}
+              >
+                {post.likes} Me gusta
+              </button>
+              <span className="like-users">Likes: {likedPosts[post.id]?.length || 0}</span>
+              <button
+                className="comment-button"
+                onClick={() => handleCommentClick(post.id)}
+              >
+                Comentar
+              </button>
+            </div>
+  
             {showCommentsForPostId === post.id && (
               <div className="comments-section">
                 {comments[post.id] && comments[post.id].length > 0 ? (
@@ -194,6 +203,7 @@ function UserHome() {
       </div>
     </div>
   );
+  
 }
 
 export default UserHome;

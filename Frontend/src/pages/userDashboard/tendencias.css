@@ -20,3 +20,14 @@
     padding-bottom: 10px;
     border-bottom: 1px solid #ddd;
 }
+
+.user-name a {
+    color: black; /* Cambia el color del texto del enlace a negro */
+    text-decoration: none; /* Quita el subrayado del enlace */
+  }
+  
+  .user-name a:hover {
+    color: darkgray; /* Opcional: Cambia el color del enlace cuando se pasa el cursor sobre él */
+    text-decoration: underline; /* Opcional: Añade subrayado cuando se pasa el cursor sobre el enlace */
+  }
+  
