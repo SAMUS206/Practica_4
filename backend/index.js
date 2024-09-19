@@ -10,7 +10,18 @@ import { crearUsuario, obtenerUsuarios, actualizarUsuario, eliminarUsuario, enco
 import { crearPost, obtenerPosts, actualizarPost, eliminarPost, obtenerCategorias, cargarPosts, agregarLike, obtenerLikes, eliminarLike, verificarLike } from './posts/posts.js';
 import { crearComentario, obtenerComentariosPorPost} from './posts/comentarios.js';
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      cb(null, file.fieldname + '-' + uniqueSuffix + '.' + file.mimetype.split('/')[1]);
+    }
+  })
+});
+
 const app = express();
 const port = 3000;
 
@@ -21,6 +32,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 // Usuarios
 app.post('/users/', async (req, res) => {
@@ -123,7 +135,7 @@ app.post('/posts/', upload.single('imagen'), async (req, res) => {
   console.log('Archivo:', req.file);
 
   try {
-    const { descripcion, codigousuario, categoria, anonimo } = req.body;
+    const { descripcion, codigousuario, categoria, anonimo} = req.body;
     const posts = await cargarPosts();
     const maxId = posts.reduce((max, post) => Math.max(max, post.id), 0);
     const newId = maxId + 1;
@@ -137,9 +149,10 @@ app.post('/posts/', upload.single('imagen'), async (req, res) => {
       categoria,
       fechahora,
       anonimo: anonimo === 'true',
-      imagen: req.file ? req.file.path : null,
+      imagen: req.file ? `uploads/${req.file.filename}` : null, // Guarda la ruta relativa
       likes
     };
+    
 
     const postCreado = await crearPost(newPost);
     res.status(201).json(postCreado);
@@ -356,4 +369,6 @@ app.delete('/users/:username/courses/:codigo_curso', async (req, res) => {
     res.status(500).send({ error: 'Error al eliminar el curso del usuario' });
   }
 });
+
+
 

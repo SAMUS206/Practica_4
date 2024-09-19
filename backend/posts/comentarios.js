@@ -8,7 +8,7 @@ export async function crearComentario(comentarioData) {
         comentarioData.timestamp = moment().tz("America/Mexico_City").format('YYYY-MM-DD HH:mm:ss');
         const [result] = await connection.execute(
             'INSERT INTO comentarios (postId, texto, timestamp, username) VALUES (?, ?, ?, ?)',
-            [comentarioData.postId, comentarioData.texto, comentarioData.timestamp, comentarioData.userId]
+            [comentarioData.postId, comentarioData.text, comentarioData.timestamp, comentarioData.userId]
         );
         comentarioData.id = result.insertId;
         return comentarioData;

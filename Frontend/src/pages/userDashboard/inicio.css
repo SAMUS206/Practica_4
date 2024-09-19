@@ -88,3 +88,13 @@
     font-size: 0.8em;
     color: #666;
 }
+.user-name a {
+    color: black; /* Cambia el color del texto del enlace a negro */
+    text-decoration: none; /* Quita el subrayado del enlace */
+  }
+  
+  .user-name a:hover {
+    color: darkgray; /* Opcional: Cambia el color del enlace cuando se pasa el cursor sobre él */
+    text-decoration: underline; /* Opcional: Añade subrayado cuando se pasa el cursor sobre el enlace */
+  }
+  
