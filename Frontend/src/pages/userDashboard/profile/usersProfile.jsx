@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import UserNavbar from '../../../components/NavBar';
 import './profile.css';
 
 function UserProfile() {
+    const { username } = useParams(); // Obtiene el nombre de usuario de la URL
     const [userDetails, setUserDetails] = useState({
         username: '',
         nombres: '',
@@ -16,7 +18,6 @@ function UserProfile() {
     const [userCourses, setUserCourses] = useState([]);
 
     useEffect(() => {
-        const username = localStorage.getItem('userId');
         if (!username) {
             return;
         }
@@ -46,7 +47,7 @@ function UserProfile() {
         };
 
         fetchUserDetails();
-    }, []);
+    }, [username]); // Dependencia del nombre de usuario
 
     return (
         <div className='All'>

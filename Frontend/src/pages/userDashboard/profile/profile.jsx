@@ -18,38 +18,37 @@ function Profile() {
     const [userCourses, setUserCourses] = useState([]);
 
     useEffect(() => {
-      const username = localStorage.getItem('userId');
-      if (!username) {
-          return;
-      }
-  
-      const fetchUserDetails = async () => {
-          try {
-              // Fetch user details
-              const response = await fetch(`http://localhost:3000/users/${username}`);
-              if (response.ok) {
-                  const data = await response.json();
-                  setUserDetails(data);
-  
-                  // Fetch user's courses
-                  const coursesResponse = await fetch(`http://localhost:3000/users/${username}/courses`);
-                  if (coursesResponse.ok) {
-                      const coursesData = await coursesResponse.json();
-                      setUserCourses(coursesData);
-                  } else {
-                      console.error('Error al obtener los cursos del usuario');
-                  }
-              } else {
-                  console.error('Error al obtener los detalles del usuario');
-              }
-          } catch (error) {
-              console.error('Error de red o servidor:', error);
-          }
-      };
-  
-      fetchUserDetails();
-  }, []);
-  
+        const username = localStorage.getItem('userId');
+        if (!username) {
+            return;
+        }
+
+        const fetchUserDetails = async () => {
+            try {
+                // Fetch user details
+                const response = await fetch(`http://localhost:3000/users/${username}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setUserDetails(data);
+
+                    // Fetch user's courses
+                    const coursesResponse = await fetch(`http://localhost:3000/users/${username}/courses`);
+                    if (coursesResponse.ok) {
+                        const coursesData = await coursesResponse.json();
+                        setUserCourses(coursesData);
+                    } else {
+                        console.error('Error al obtener los cursos del usuario');
+                    }
+                } else {
+                    console.error('Error al obtener los detalles del usuario');
+                }
+            } catch (error) {
+                console.error('Error de red o servidor:', error);
+            }
+        };
+
+        fetchUserDetails();
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -79,29 +78,31 @@ function Profile() {
     };
 
     const handleAddCourse = async () => {
-        const username = localStorage.getItem('userId');
-        if (!courseCode) return;
-
-        try {
-            const response = await fetch(`http://localhost:3000/users/${username}/courses`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ codigo_curso: courseCode })
-            });
-
-            if (response.ok) {
-                const newCourse = await response.json();
-                setUserCourses([...userCourses, { codigo_curso: courseCode, nombre_curso: newCourse.nombre_curso }]);
-                setCourseCode('');
-            } else {
-                alert('Ocurrió un error al agregar el curso');
-            }
-        } catch (error) {
-            console.error('Error de red o servidor:', error);
-        }
-    };
+      const username = localStorage.getItem('userId');
+      if (!courseCode) return;
+  
+      try {
+          const response = await fetch(`http://localhost:3000/users/${username}/courses`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ codigo_curso: courseCode })
+          });
+  
+          if (response.ok) {
+              // Si no puedes obtener el nombre, solo actualiza el estado con el código del curso
+              const newCourse = { codigo_curso: courseCode, nombre_curso: 'Nombre del Curso No Disponible' };
+              setUserCourses([...userCourses, newCourse]);
+              setCourseCode('');
+          } else {
+              alert('Ocurrió un error al agregar el curso');
+          }
+      } catch (error) {
+          console.error('Error de red o servidor:', error);
+      }
+  };
+  
 
     const handleRemoveCourse = async (codigo_curso) => {
         const username = localStorage.getItem('userId');
@@ -164,25 +165,25 @@ function Profile() {
             <div className="courses-section">
                 <h2>Cursos Seleccionados</h2>
                 <table>
-                  <thead>
-                      <tr>
-                          <th>Código del Curso</th>
-                          <th>Nombre del Curso</th>
-                          <th>Acciones</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      {userCourses.map(course => (
-                          <tr key={course.codigo_curso}>
-                              <td>{course.codigo_curso}</td>
-                              <td>{course.nombre_curso}</td>
-                              <td>
-                                  <button onClick={() => handleRemoveCourse(course.codigo_curso)}>Eliminar</button>
-                              </td>
-                          </tr>
-                      ))}
-                  </tbody>
-              </table>
+                    <thead>
+                        <tr>
+                            <th>Código del Curso</th>
+                            <th>Nombre del Curso</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {userCourses.map(course => (
+                            <tr key={course.codigo_curso}>
+                                <td>{course.codigo_curso}</td>
+                                <td>{course.nombre_curso}</td>
+                                <td>
+                                    <button onClick={() => handleRemoveCourse(course.codigo_curso)}>Eliminar</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
 
                 <h2>Agregar Curso</h2>
                 <input 
