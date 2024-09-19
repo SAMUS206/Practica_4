@@ -14,6 +14,7 @@ import UserHome from '../pages/userDashboard/inicio'
 import Trending from '../pages/userDashboard/tendencias'
 import Profile from '../pages/userDashboard/profile/profile'
 import NewUserPost from '../pages/userDashboard/post/post'
+import UserProfile from '../pages/userDashboard/profile/usersProfile'
 export const AppRouter = () => {
   return (
 
@@ -34,6 +35,7 @@ export const AppRouter = () => {
         <Route path='/profile' element={<Profile/>}/>
         <Route path='/NewPost' element={<NewUserPost/>}/>
         <Route path='/' element={<Login/>}/>
+        <Route path="/user/:username" element={<UserProfile/>} />
     </Routes>
 )
 }

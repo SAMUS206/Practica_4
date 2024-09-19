@@ -3,7 +3,7 @@ import cors from 'cors';
 import multer from 'multer';
 import fs from 'fs';
 import bcrypt from 'bcrypt';
-
+import { obtenerCursos, obtenerCursosPorUsuario, agregarCursoAUsuario, eliminarCursoDeUsuario } from './curses/curses.js';
 import moment from 'moment-timezone';
 
 import { crearUsuario, obtenerUsuarios, actualizarUsuario, eliminarUsuario, encontrarUsuarioPorUsername } from './users/usuarios.js';
@@ -299,3 +299,61 @@ app.get('/posts/like/:postId', async (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
 });
+
+
+// Importar funciones de cursos
+
+// Obtener cursos de un usuario
+app.get('/users/:username/courses', async (req, res) => {
+  const { username } = req.params;
+  try {
+    const cursos = await obtenerCursosPorUsuario(username);
+    res.json(cursos);
+  } catch (error) {
+    res.status(500).send({ error: 'Error al obtener los cursos del usuario' });
+  }
+});
+
+
+// Obtener cursos de un usuario
+app.post('/users/:username/courses', async (req, res) => {
+  const { username } = req.params;
+  const { codigo_curso } = req.body;
+  if (!codigo_curso) {
+    return res.status(400).send({ error: 'El código del curso es requerido' });
+  }
+  try {
+    await agregarCursoAUsuario(username, codigo_curso);
+    res.status(201).send({ message: 'Curso agregado exitosamente' });
+  } catch (error) {
+    res.status(500).send({ error: 'Error al agregar el curso al usuario' });
+  }
+});
+
+
+// Agregar curso a un usuario
+app.post('/users/:username/courses', async (req, res) => {
+  const { username } = req.params;
+  const { codigo_curso } = req.body;
+  if (!codigo_curso) {
+    return res.status(400).send({ error: 'El código del curso es requerido' });
+  }
+  try {
+    await agregarCursoAUsuario(username, codigo_curso);
+    res.status(201).send({ message: 'Curso agregado exitosamente' });
+  } catch (error) {
+    res.status(500).send({ error: 'Error al agregar el curso al usuario' });
+  }
+});
+
+// Eliminar curso de un usuario
+app.delete('/users/:username/courses/:codigo_curso', async (req, res) => {
+  const { username, codigo_curso } = req.params;
+  try {
+    await eliminarCursoDeUsuario(username, parseInt(codigo_curso, 10));
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).send({ error: 'Error al eliminar el curso del usuario' });
+  }
+});
+

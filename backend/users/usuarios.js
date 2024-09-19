@@ -111,3 +111,4 @@ export async function encontrarUsuarioPorUsername(username) {
   const [rows] = await connection.execute(query, [username]);
   return rows[0]; // Devuelve el primer resultado encontrado
 }
+
