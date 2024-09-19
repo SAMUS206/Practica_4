@@ -4,13 +4,15 @@ import multer from 'multer';
 import fs from 'fs';
 import bcrypt from 'bcrypt';
 
-import { cargarUsuarios, crearUsuario, obtenerUsuarios, actualizarUsuario, eliminarUsuario } from './users/usuarios.js';
-import { actualizarPostLike, obtenerCategorias, cargarPosts, crearPost, obtenerPosts, actualizarPost, eliminarPost } from './posts/posts.js';
-import { cargarComentarios, guardarComentarios, crearComentario, obtenerComentariosPorPost} from './posts/comentarios.js';
 import moment from 'moment-timezone';
+
+import { crearUsuario, obtenerUsuarios, actualizarUsuario, eliminarUsuario, encontrarUsuarioPorUsername } from './users/usuarios.js';
+import { crearPost, obtenerPosts, actualizarPost, eliminarPost, obtenerCategorias, cargarPosts, agregarLike, obtenerLikes, eliminarLike, verificarLike } from './posts/posts.js';
+import { crearComentario, obtenerComentariosPorPost} from './posts/comentarios.js';
+
 const upload = multer({ dest: 'uploads/' });
 const app = express();
-const port = 3000;  
+const port = 3000;
 
 app.use(cors({
   origin: 'http://localhost:5173',
@@ -20,32 +22,26 @@ app.use(cors({
 
 app.use(express.json());
 
+// Usuarios
 app.post('/users/', async (req, res) => {
+  console.log('Datos recibidos en /users/:', req.body); // Añadido para depuración
+  
   const { username, nombres, apellidos, genero, facultad, carrera, mail, contraseña, isAdmin } = req.body;
 
   if (!username || !nombres || !apellidos || !genero || !facultad || !carrera || !mail || !contraseña) {
     return res.status(400).send({ error: 'Todos los campos son requeridos y deben ser válidos.' });
   }
+  
   try {
     const usuario = await crearUsuario(req.body);
     res.status(201).send(usuario);
   } catch (error) {
+    console.error('Error al crear usuario en la ruta:', error); // Añadido para depuración
     res.status(500).send({ error: 'Error al procesar la solicitud' });
   }
 });
 
-const fetchUserDetails = async () => {
-  try {
-    const response = await fetch(`http://localhost:3000/users/${username}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    const data = await response.json();
-    setUserDetails(data);
-  } catch (error) {
-    console.error('Error fetching user details:', error);
-  }
-};  
+
 app.get('/users/', async (req, res) => {
   try {
     const usuarios = await obtenerUsuarios();
@@ -54,21 +50,22 @@ app.get('/users/', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 app.get('/users/:username', async (req, res) => {
   try {
-    const { username } = req.params;
-    const usuarios = await cargarUsuarios(); 
-    const usuario = usuarios.find(u => u.username === username);
-    if (usuario) {
-      res.json(usuario);
-    } else {
-      res.status(404).json({ error: 'Usuario no encontrado' });
-    }
+      const { username } = req.params;
+      const usuario = await encontrarUsuarioPorUsername(username); // Usamos la función para encontrar el usuario en la DB
+      console.log(usuario); // Agrega este log para depurar
+      if (usuario) {
+          res.json(usuario);
+      } else {
+          res.status(404).json({ error: 'Usuario no encontrado' });
+      }
   } catch (error) {
-    console.error('Error al buscar el usuario:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+      res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
+
 
 app.patch('/users/:username', async (req, res) => {
   try {
@@ -90,62 +87,68 @@ app.delete('/users/:username', async (req, res) => {
 
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
-  const usuarios = await cargarUsuarios();
-  const user = usuarios.find(u => u.username === username);
   
-  if (user) {
+  try {
+    const user = await encontrarUsuarioPorUsername(username);
 
-    const validPassword = await bcrypt.compare(password, user.contraseña)
+    if (user) {
+      // Compara la contraseña proporcionada con la contraseña encriptada en la base de datos
+      const contrasenaValida = await bcrypt.compare(password, user.contraseña);
 
-    if (validPassword) {
-      return res.status(200).json({
-        message: 'Inicio de sesión exitoso',
-        isAdmin: user.isAdmin,
-        username: user.username  
-    });
+      if (contrasenaValida) {
+        // Autenticación exitosa
+        res.status(200).json({
+          message: 'Inicio de sesión exitoso',
+          isAdmin: user.isAdmin,
+          username: user.username  
+        });
+      } else {
+        // Contraseña incorrecta
+        res.status(401).json({ error: 'Usuario o contraseña incorrectos' });
+      }
+    } else {
+      // Usuario no encontrado
+      res.status(401).json({ error: 'Usuario o contraseña incorrectos' });
+    }
   }
-   
-  else {
-    res.status(401).json({ error: 'Inicio de sesión fallido. Usuario o contraseña incorrectos.' });
-  }
+  catch (error) {
+    console.error('Error en el endpoint /login:', error);
+    res.status(500).send({ error: 'Error interno del servidor' });
   }
 });
 
-
-app.post('/posts/', upload.single('image'), async (req, res) => {
+// Posts
+app.post('/posts/', upload.single('imagen'), async (req, res) => {
+  console.log('Datos del formulario:', req.body);
+  console.log('Archivo:', req.file);
 
   try {
     const { descripcion, codigousuario, categoria, anonimo } = req.body;
-      console.log(codigousuario);
-      console.log(descripcion);
-      console.log(categoria);
-      console.log(anonimo);
-      console.log(req.body);
-      const posts = await cargarPosts();
-      const maxId = posts.reduce((max, post) => Math.max(max, post.id), 0);
-      const newId = maxId + 1;
-      console.log(newId)
-      const fechahora = moment().tz("America/Mexico_City").format();
-      const likes = 0;
+    const posts = await cargarPosts();
+    const maxId = posts.reduce((max, post) => Math.max(max, post.id), 0);
+    const newId = maxId + 1;
+    const fechahora = moment().tz("America/Mexico_City").format(); 
+    const likes = 0;
 
-      const newPost = {
-          id: newId,
-          descripción: descripcion,
-          códigousuario: codigousuario,
-          categoría: categoria,
-          fechahora,
-          anónimo: anonimo === 'true',
-          imagen: req.file ? req.file.path : null,
-          likes
-      };
+    const newPost = {
+      id: newId,
+      descripcion,
+      codigousuario,
+      categoria,
+      fechahora,
+      anonimo: anonimo === 'true',
+      imagen: req.file ? req.file.path : null,
+      likes
+    };
 
-      const postCreado = await crearPost(newPost);
-      res.status(201).json(postCreado);
+    const postCreado = await crearPost(newPost);
+    res.status(201).json(postCreado);
   } catch (error) {
-      console.error('Error al crear el post:', error);
-      res.status(500).send({ error: 'Error interno del servidor' });
+    console.error('Error al crear el post:', error);
+    res.status(500).send({ error: 'Error interno del servidor' });
   }
 });
+
 
 app.get('/posts/', async (req, res) => {
   try {
@@ -155,21 +158,22 @@ app.get('/posts/', async (req, res) => {
     res.status(500).send({ error: 'Error al obtener los posts' });
   }
 });
+
 app.get('/posts/:id', async (req, res) => {
   const { id } = req.params;
   try {
-      const posts = await cargarPosts();
-      const post = posts.find(p => p.id == id);
-      if (post) {
-          res.json(post);
-      } else {
-          res.status(404).send({ error: 'Post no encontrado' });
-      }
+    const posts = await cargarPosts();
+    const post = posts.find(p => p.id == id);
+    if (post) {
+      res.json(post);
+    } else {
+      res.status(404).send({ error: 'Post no encontrado' });
+    }
   } catch (error) {
-      console.error('Error interno del servidor:', error);
-      res.status(500).send({ error: 'Error interno del servidor' });
+    res.status(500).send({ error: 'Error interno del servidor' });
   }
 });
+
 app.patch('/posts/:id', async (req, res) => {
   try {
     const updatedPost = await actualizarPost(parseInt(req.params.id), req.body);
@@ -188,110 +192,7 @@ app.delete('/posts/:id', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${port}`);
-});
-
-app.post('/posts/mass_upload', upload.single('file'), async (req, res) => {
-  console.log("Request received for posts/mass_upload");
-  if (!req.file) {
-    console.log("No file uploaded");
-    return res.status(400).json({ error: 'No file uploaded.' });
-  }
-  console.log("File uploaded:", req.file.path);
-
-  const filePath = req.file.path;
-
-  try {
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    console.log("File content read:", fileContent.substring(0, 100));
-    const data = JSON.parse(fileContent);
-    console.log("Parsed data:", data);
-
-    if (!data.posts || !Array.isArray(data.posts)) {
-      console.log("Invalid format: posts array not found");
-      return res.status(400).json({ error: 'Formato de archivo incorrecto.' });
-    }
-
-    const validPosts = data.posts.filter(post => post.descripción && post.códigousuario && post.categoría && typeof post.anónimo === 'boolean');
-    console.log("Valid posts:", validPosts);
-    const results = [];
-    
-    for (const post of validPosts) {
-      try {
-        const postWithTimestamp = {
-          ...post,
-          fechahora: moment().tz("America/Mexico_City").format()
-        };
-        
-        const createdPost = await crearPost(postWithTimestamp);
-        console.log("Post created successfully:", createdPost);
-        results.push(createdPost);
-      } catch (error) {
-        console.log("Error creating post:", error.message);
-        results.push({ error: error.message, id: post.id });
-      }
-    }
-
-    console.log("All posts processed, sending response");
-    res.status(200).json({ message: 'Carga de posts exitosa.', results });
-  } catch (error) {
-    console.error("Error processing the file:", error);
-    res.status(500).json({ error: 'Error al procesar el archivo.' });
-  } finally {
-    fs.unlinkSync(filePath);
-    console.log("Temporary file deleted");
-  }
-});
-
-app.post('/users/mass_upload', upload.single('file'), async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: 'sin archivo.' });
-  }
-
-  const filePath = req.file.path;
-
-  try {
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    const data = JSON.parse(fileContent);
-
-    if (!data.users || !Array.isArray(data.users)) {
-      return res.status(400).json({ error: 'Formato de archivo incorrecto.' });
-    }
-
-    const results = [];
-    for (const user of data.users) {
-      try {
-        const createdUser = await crearUsuario(user);
-        results.push(createdUser);
-      } catch (error) {
-        if (error.message.startsWith("El usuario con username")) {
-          console.error(`Error: ${error.message}`); 
-          results.push({ error: error.message, username: user.username });
-        } else {
-          throw error; 
-        }
-      }
-    }
-
-    res.status(200).json({ message: 'Proceso de carga completado, con algunos errores.', results });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to process the file.' });
-  } finally {
-    fs.unlinkSync(filePath); 
-  }
-});
-
-app.get('/categorias', async (req, res) => {
-  try {
-    const categorias = await obtenerCategorias();
-    res.json(categorias);
-  } catch (error) {
-    console.error('Error al obtener categorías:', error);
-    res.status(500).send({ error: 'Error interno del servidor' });
-  }
-});
+// Likes
 app.patch('/posts/like/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -305,51 +206,96 @@ app.patch('/posts/like/:id', async (req, res) => {
 
     res.status(200).json(posts[postIndex]);
   } catch (error) {
-    console.error('Error al dar like al post:', error);
     res.status(500).send({ error: 'Error interno del servidor' });
   }
 });
+
+// Comentarios
 app.post('/comments/', async (req, res) => {
+
   const { postId, userId, text } = req.body;
+  console.log('Datos recibidos en /comments/:', req.body);
+
+  if (!postId || !userId || !text) {
+    return res.status(400).send({ error: 'Todos los campos son requeridos' });
+  }
   try {
-    const newComment = await crearComentario({ postId, userId, text });
+    const newComment = await crearComentario({ postId, userId, text});
     res.status(201).json(newComment);
   } catch (error) {
-    console.error('Error al crear comentario:', error);
     res.status(500).send({ error: 'Error al procesar la solicitud' });
   }
 });
+
 app.get('/comments/:postId', async (req, res) => {
   const { postId } = req.params;
-  console.log('Estamos en la api de posts con el post');
-  console.log(postId);
   try {
     const comments = await obtenerComentariosPorPost(postId);
     res.json(comments);
   } catch (error) {
-    console.error('Error al obtener comentarios:', error);
     res.status(500).send({ error: 'Error interno del servidor' });
   }
 });
+
 app.get('/comments', async (req, res) => {
   try {
-      const allComments = await cargarComentarios();
-      res.json(allComments);
+    const allComments = await cargarComentarios();
+    res.json(allComments);
   } catch (error) {
-      console.error('Failed to fetch comments:', error);
-      res.status(500).send({ error: 'Error al obtener los comentarios' });
+    res.status(500).send({ error: 'Error al obtener los comentarios' });
   }
 });
-app.post('/auxiliar', async (req, res) => {
-  const { username, nombres, apellidos, genero, facultad, carrera, mail, contraseña, isAdmin } = req.body;
 
-  if (!username || !nombres || !apellidos || !genero || !facultad || !carrera || !mail || !contraseña) {
-    return res.status(400).send({ error: 'Todos los campos son requeridos y deben ser válidos.' });
-  }
+// Categorías
+app.get('/categorias', async (req, res) => {
   try {
-    const usuario = await crearUsuario(req.body);
-    res.status(201).send(usuario);
+    const categorias = await obtenerCategorias();
+    console.log('Categorías:', categorias);
+    res.json(categorias);
   } catch (error) {
-    res.status(500).send({ error: 'Error al procesar la solicitud' });
+    console.error('Error al obtener categorías:', error);
+    res.status(500).send({ error: 'Error interno del servidor' });
   }
+});
+
+app.post('/posts/like', async (req, res) => {
+  const { postId, username } = req.body;
+  try {
+      console.log(postId);
+      console.log(username);
+      await agregarLike(postId, username);
+      const likeCount = await obtenerLikes(postId);
+      res.status(200).json({ message: 'Like agregado', likeCount });
+  } catch (error) {
+      res.status(400).json({ error: error.message });
+  }
+});
+
+app.delete('/posts/like', async (req, res) => {
+  const { postId, username } = req.body;
+  try {
+      await eliminarLike(postId, username);
+      const likeCount = await obtenerLikes(postId);
+      res.status(200).json({ message: 'Like eliminado', likeCount });
+  } catch (error) {
+      res.status(400).json({ error: error.message });
+  }
+});
+
+app.get('/posts/like/:postId', async (req, res) => {
+  const { postId } = req.params;
+  try {
+      const likeCount = await obtenerLikes(postId);
+      console.log('Número de likes:', likeCount);
+      res.status(200).json({ likeCount });
+  } catch (error) {
+      res.status(500).json({ error: 'Error al obtener los likes' });
+  }
+});
+
+
+
+
+app.listen(port, () => {
+  console.log(`Servidor escuchando en http://localhost:${port}`);
 });

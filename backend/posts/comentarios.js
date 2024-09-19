@@ -1,44 +1,35 @@
-import { readFile, writeFile } from 'fs/promises';
+import mysql from 'mysql2/promise';
+import connection from '../db.js'; // Ajusta la ruta según sea necesario
 import moment from 'moment-timezone';
-const archivoComentarios = 'posts/comentarios.json';
 
-export async function cargarComentarios() {
+// Crear un nuevo comentario
+export async function crearComentario(comentarioData) {
     try {
-        const data = await readFile(archivoComentarios, 'utf8');
-        console.log("Estamos cargar archivos");
-        // console.log(JSON.parse(data).comments);
-        return JSON.parse(data).comments;
+        comentarioData.timestamp = moment().tz("America/Mexico_City").format('YYYY-MM-DD HH:mm:ss');
+        const [result] = await connection.execute(
+            'INSERT INTO comentarios (postId, texto, timestamp, username) VALUES (?, ?, ?, ?)',
+            [comentarioData.postId, comentarioData.texto, comentarioData.timestamp, comentarioData.userId]
+        );
+        comentarioData.id = result.insertId;
+        return comentarioData;
     } catch (error) {
-        console.error('Error al cargar comentarios:', error);
-        return [];
-    }
-}
-
-export async function guardarComentarios(comments) {
-    try {
-        const data = JSON.stringify({ comments }, null, 2);
-        await writeFile(archivoComentarios, data, 'utf8');
-        console.log('Comentarios guardados exitosamente');
-    } catch (error) {
-        console.error('Error al guardar comentarios:', error);
+        console.error('Error al crear el comentario:', error);
         throw error;
     }
 }
 
-export async function crearComentario(comentarioData) {
-    const comments = await cargarComentarios();
-    const newId = comments.length + 1; 
-    comentarioData.id = newId;
-    comentarioData.timestamp = moment().tz("America/Mexico_City").format()
-    comments.push(comentarioData);
-    await guardarComentarios(comments);
-    return comentarioData;
+
+
+
+// Obtener comentarios por ID de post
+export async function obtenerComentariosPorPost(postId) {
+    try {
+        const [rows] = await connection.execute('SELECT * FROM comentarios WHERE postId = ?', [postId]);
+        console.log('Comentarios obtenidos:', rows); // Agrega esta línea
+        return rows;
+    } catch (error) {
+        console.error('Error al obtener comentarios por post:', error);
+        throw error;
+    }
 }
 
-export async function obtenerComentariosPorPost(postId) {
-    const comments = await cargarComentarios();
-    // console.log('Obteniendo posts');
-    // console.log(postId);
-    // console.log(comments.filter(comments => comments.postId == postId));
-    return comments.filter(comments => comments.postId == postId);
-}

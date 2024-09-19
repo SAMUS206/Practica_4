@@ -1,83 +1,113 @@
 import bcrypt from 'bcrypt';
-import { readFile, writeFile } from 'fs/promises';
-const archivoUsuarios = 'users/users.json'; 
-
-export async function cargarUsuarios() {
-  try {
-      const data = await readFile(archivoUsuarios, 'utf8');
-      return JSON.parse(data).users;
-  } catch (error) {
-      console.error('Error al cargar usuarios:', error);
-      return [];
-  }
-}
-
-async function guardarUsuarios(usuarios) {
-  try {
-    const data = JSON.stringify({ users: usuarios }, null, 2);
-    await writeFile(archivoUsuarios, data, 'utf8');
-    console.log('Usuarios guardados exitosamente:', data); 
-  } catch (error) {
-    console.error('Error al guardar usuarios:', error);
-    throw error; 
-  }
-}
-
-
-
+import connection from '../db.js'; // Ajusta la ruta según sea necesario
+import moment from 'moment-timezone';
 export async function crearUsuario(usuario) {
-  const usuarios = await cargarUsuarios();
-  if (usuarios.some(u => u.username === usuario.username)) {
-    throw new Error(`El usuario con username ${usuario.username} ya existe.`);
-  }
-
-  // Hashear la contraseña
-  const hashedPassword = await bcrypt.hash(usuario.contraseña, 10);
-  usuario.contraseña = hashedPassword;
-
-  usuarios.push(usuario);
-  await guardarUsuarios(usuarios);
-  return usuario;
-}
-
-
-
-
-export async function obtenerUsuarios() {
-  return cargarUsuarios();
-}
-
-export async function actualizarUsuario(username, datosUsuario) {
-  let usuarios = await cargarUsuarios();
-  const index = usuarios.findIndex(u => u.username === username);
-  if (index !== -1) {
-    const datosParaActualizar = Object.entries(datosUsuario).reduce((acc, [key, value]) => {
-      if (value !== null && value !== '') {
-        acc[key] = value;
-      }
-      return acc;
-    }, {});
-    if (Object.keys(datosParaActualizar).length === 0) {
-      throw new Error('No hay datos válidos para actualizar.');
+  try {
+    // Verifica si el usuario ya existe
+    const [rows] = await connection.execute('SELECT * FROM usuarios WHERE username = ?', [usuario.username]);
+    if (rows.length > 0) {
+      throw new Error(`El usuario con username ${usuario.username} ya existe.`);
     }
-    usuarios[index] = { ...usuarios[index], ...datosParaActualizar };
-    await guardarUsuarios(usuarios);
-    return usuarios[index];
+
+    // Hashear la contraseña
+    const hashedPassword = await bcrypt.hash(usuario.contraseña, 10);
+    
+    // Convertir valores undefined a null
+    const valores = [
+      usuario.username || null,
+      usuario.nombres || null,
+      usuario.apellidos || null,
+      usuario.genero || null,
+      usuario.facultad || null,
+      usuario.carrera || null,
+      usuario.email || null, // Asegúrate de usar el nombre correcto aquí
+      hashedPassword,
+      usuario.isAdmin || false
+    ];
+
+    // Insertar el nuevo usuario en la base de datos
+    const [result] = await connection.execute(
+      'INSERT INTO usuarios (username, nombres, apellidos, genero, facultad, carrera, email, contraseña, isAdmin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      valores
+    );
+
+    usuario.id = result.insertId;
+    return { ...usuario, contraseña: hashedPassword };
+  } catch (error) {
+    console.error('Error al crear usuario:', error);
+    throw error;
   }
-  throw new Error(`El usuario con username ${username} no existe.`);
 }
 
-export async function eliminarUsuario(username) {
-  let usuarios = await cargarUsuarios();
-  const usuarioExiste = usuarios.some(u => u.username === username);
-  if (!usuarioExiste) {
-    throw new Error(`El usuario con username ${username} no existe.`);
+// Obtener todos los usuarios
+export async function obtenerUsuarios() {
+  try {
+    const [rows] = await connection.execute('SELECT * FROM usuarios');
+    return rows;
+  } catch (error) {
+    console.error('Error al obtener usuarios:', error);
+    throw error;
   }
-  usuarios = usuarios.filter(u => u.username !== username);
-  await guardarUsuarios(usuarios);
-  return true;
 }
+
+// Actualizar un usuario por username
+export async function actualizarUsuario(username, datosUsuario) {
+  try {
+    // Encuentra el usuario por username
+    const [rows] = await connection.execute('SELECT * FROM usuarios WHERE username = ?', [username]);
+    if (rows.length === 0) {
+      throw new Error(`El usuario con username ${username} no existe.`);
+    }
+
+    // Si existe created_at, convertirlo al formato correcto
+    if (datosUsuario.created_at) {
+      datosUsuario.created_at = moment(datosUsuario.created_at).format('YYYY-MM-DD HH:mm:ss');
+    }
+
+    // Construir los campos para actualizar dinámicamente
+    const campos = [];
+    const valores = [];
+    for (const [key, value] of Object.entries(datosUsuario)) {
+      if (value !== null && value !== '' && key !== 'username') {
+        campos.push(`${key} = ?`);
+        valores.push(value);
+      }
+    }
+
+    // Ejecutar actualización
+    const sql = `UPDATE usuarios SET ${campos.join(', ')} WHERE username = ?`;
+    await connection.execute(sql, [...valores, username]);
+    
+    return datosUsuario;
+  } catch (error) {
+    console.error('Error al actualizar usuario:', error);
+    throw error;
+  }
+}
+
+
+// Eliminar un usuario por username
+export async function eliminarUsuario(username) {
+  try {
+    // Verifica si el usuario existe
+    const [rows] = await connection.execute('SELECT * FROM usuarios WHERE username = ?', [username]);
+    if (rows.length === 0) {
+      throw new Error(`El usuario con username ${username} no existe.`);
+    }
+
+    // Elimina el usuario
+    await connection.execute('DELETE FROM usuarios WHERE username = ?', [username]);
+
+    return true;
+  } catch (error) {
+    console.error('Error al eliminar usuario:', error);
+    throw error;
+  }
+}
+
+// Encontrar un usuario por username
 export async function encontrarUsuarioPorUsername(username) {
-  const usuarios = await cargarUsuarios();
-  return usuarios.find(u => u.username === username);
+  const query = 'SELECT * FROM usuarios WHERE username = ?';
+  const [rows] = await connection.execute(query, [username]);
+  return rows[0]; // Devuelve el primer resultado encontrado
 }

@@ -8,8 +8,8 @@ function Register() {
         nombres: '',
         apellidos: '',
         genero: '',
-        facultad: '',
-        carrera: '',
+        facultad: 'Ingenieria',  // Valor por defecto
+        carrera: 'Ciencias y Sistemas',  // Valor por defecto
         email: '',
         contraseña: '',
         confirmarContraseña: ''
@@ -45,38 +45,36 @@ function Register() {
         }
 
         try {
-           
-            
             const nuevoUsuario = {
                 username: user.username,
                 nombres: user.nombres,
                 apellidos: user.apellidos,
                 genero: user.genero,
-                facultad: user.facultad,
-                carrera: user.carrera,
+                facultad: user.facultad,  // Usando valores por defecto
+                carrera: user.carrera,    // Usando valores por defecto
                 mail: user.email,
                 contraseña: user.contraseña,
-                 isAdmin: false 
+                isAdmin: false 
             };
 
             const usuarioCreado = await crearUsuario(nuevoUsuario);
             console.log('Usuario registrado:', usuarioCreado);
             setSuccessMessage('Usuario registrado con éxito. Puede iniciar sesión ahora.');
             setError('');
-         
+        
             setUser({
                 username: '',
                 nombres: '',
                 apellidos: '',
                 genero: '',
-                facultad: '',
-                carrera: '',
+                facultad: 'Ingenieria',  // Restablecer valores por defecto
+                carrera: 'Ciencias y Sistemas',  // Restablecer valores por defecto
                 email: '',
                 contraseña: '',
                 confirmarContraseña: ''
             });
             
-            alert("Usuario registrado exitosamente", user.username)
+            alert("Usuario registrado exitosamente", user.username);
             setTimeout(() => navigate('/login'), 200);
             
         } catch (error) {
@@ -105,16 +103,12 @@ function Register() {
                     <option value="Femenino">Femenino</option>
                     <option value="Otro">Otro</option>
                 </select>
-                <label>Facultad</label>
-                <input type="text" name="facultad" value={user.facultad} onChange={handleChange} />
-                <label>Carrera</label>
-                <input type="text" name="carrera" value={user.carrera} onChange={handleChange} />
+                {/* Campos "Facultad" y "Carrera" eliminados */}
                 <label>Correo Electrónico</label>
                 <input type="email" name="email" value={user.email} onChange={handleChange} />
                 <label>Contraseña</label>
                 <input type="password" name="contraseña" value={user.contraseña} onChange={handleChange} />
                 <label>Confirmar Contraseña</label>
-                
                 <input
                     type="password"
                     name="confirmarContraseña"
@@ -122,10 +116,8 @@ function Register() {
                     onChange={handleChange}
                 />
                 <button type="submit">Registrar</button>
-                
             </form>
         </div>
-        
     );
 }
 

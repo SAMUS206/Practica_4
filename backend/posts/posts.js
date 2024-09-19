@@ -1,81 +1,140 @@
-import { readFile, writeFile } from 'fs/promises';
+import mysql from 'mysql2/promise';
+import moment from 'moment-timezone';
+import connection from '../db.js'; // Ajusta la ruta según sea necesario
 
-const archivoPosts = 'posts/posts.json';
-
-export async function cargarPosts() {
+// Crear un nuevo post
+export async function crearPost(postData) {
     try {
-        const data = await readFile(archivoPosts, 'utf8');
-        return JSON.parse(data).posts;
+      const [result] = await connection.execute(
+        'INSERT INTO posts (username, descripcion, categoria, anonimo, imagen) VALUES (?, ?, ?, ?, ?)',
+        [postData.codigousuario, postData.descripcion, postData.categoria, postData.anonimo, postData.imagen]
+      );
+      postData.id = result.insertId;
+      return postData;
     } catch (error) {
-        console.error('Error al cargar posts:', error);
-        return [];
+      console.error('Error al crear el post:', error);
+      throw error;
     }
+  }
+  
+
+// Obtener todos los posts
+export async function obtenerPosts() {
+    try {
+      const [rows] = await connection.execute(`
+        SELECT p.id, p.descripcion, p.categoria, p.anonimo, p.imagen, p.created_at, 
+               p.username, u.username 
+        FROM posts p
+        LEFT JOIN usuarios u ON p.username = u.username
+      `);
+      return rows;
+    } catch (error) {
+      console.error('Error al obtener posts:', error);
+      throw error;
+    }
+  }
+
+// Actualizar un post por ID
+export async function actualizarPost(id, datosPost) {
+  try {
+    const [result] = await connection.execute(
+      'UPDATE posts SET descripcion = ?, categoria = ?, anonimo = ?, imagen = ? WHERE id = ?',
+      [datosPost.descripcion, datosPost.categoria, datosPost.anonimo, datosPost.imagen, id]
+    );
+    if (result.affectedRows === 0) {
+      throw new Error(`El post con id ${id} no existe.`);
+    }
+    return { id, ...datosPost };
+  } catch (error) {
+    console.error('Error al actualizar el post:', error);
+    throw error;
+  }
 }
 
-export async function guardarPosts(posts) {
+// Eliminar un post por ID
+export async function eliminarPost(id) {
+  try {
+    const [result] = await connection.execute('DELETE FROM posts WHERE id = ?', [id]);
+    if (result.affectedRows === 0) {
+      throw new Error(`El post con id ${id} no existe.`);
+    }
+    return true;
+  } catch (error) {
+    console.error('Error al eliminar el post:', error);
+    throw error;
+  }
+}
+
+export async function obtenerCategorias() {
     try {
-        const data = JSON.stringify({ posts: posts }, null, 2);
-        await writeFile(archivoPosts, data, 'utf8');
-        console.log('Posts guardados exitosamente:', data);
+      const [rows] = await connection.execute('SELECT DISTINCT categoria FROM posts');
+      return rows.map(row => row.categoria);
     } catch (error) {
-        console.error('Error al guardar posts:', error);
+      console.error('Error al obtener categorías:', error);
+      throw error;
+    }
+  }
+
+  export async function cargarPosts() {
+    try {
+        const [rows] = await connection.execute('SELECT * FROM posts ORDER BY id DESC');
+        return rows;
+        } catch (error) {
+            console.error('Error al cargar posts:', error);
+            throw error;
+        }
+    
+  }
+
+  // Añadir un like
+export async function agregarLike(postId, username) {
+    try {
+        await connection.execute(
+            'INSERT INTO likes (postId, username) VALUES (?, ?)',
+            [postId, username]
+        );
+    } catch (error) {
+        if (error.code === 'ER_DUP_ENTRY') {
+            throw new Error('Ya has dado like a este post.');
+        }
         throw error;
     }
 }
 
-export async function crearPost(postData) {
-    const posts = await cargarPosts();
-    const newId = posts.length + 1; 
-    postData.id = newId;
-    posts.push(postData);
-    await guardarPosts(posts);
-    return postData;
+// Eliminar un like
+export async function eliminarLike(postId, username) {
+    try {
+        await connection.execute(
+            'DELETE FROM likes WHERE postId = ? AND username = ?',
+            [postId, username]
+        );
+    } catch (error) {
+        throw error;
+    }
 }
 
-export async function obtenerPosts() {
-    return cargarPosts();
+// Obtener la cantidad de likes para un post
+export async function obtenerLikes(postId) {
+    try {
+        const [rows] = await connection.execute(
+            'SELECT COUNT(*) AS likeCount FROM likes WHERE postId = ?',
+            [postId]
+        );
+        return rows[0].likeCount;
+    } catch (error) {
+        throw error;
+    }
 }
 
-export async function actualizarPostLike(id, datosPost) {
-    let posts = await cargarPosts();
-    const index = posts.findIndex(p => p.id == id);
-    if (index !== -1) {
-        // Solo actualiza los likes, si es lo que pasaste en datosPost
-        posts[index].likes = datosPost.likes;
-        await guardarPosts(posts);
-        return posts[index];
+// Verificar si un usuario ya ha dado like a un post
+export async function verificarLike(postId, username) {
+    try {
+        const [rows] = await connection.execute(
+            'SELECT 1 FROM likes WHERE postId = ? AND username = ?',
+            [postId, username]
+        );
+        return rows.length > 0;
+    } catch (error) {
+        throw error;
     }
-    throw new Error(`El post con id ${id} no existe.`);
 }
-
-export async function actualizarPost(id, datosPost) {
-    let posts = await cargarPosts();
-    const index = posts.findIndex(p => p.id === id);
-    if (index !== -1) {
-      posts[index] = { ...posts[index], ...datosPost };
-      await guardarPosts(posts);
-      return posts[index];
-    } else {
-      throw new Error(`El post con id ${id} no existe.`);
-    }
-  }
-export async function eliminarPost(id) {
-    let posts = await cargarPosts();
-    const postIndex = posts.findIndex(p => p.id === id);
-    if (postIndex === -1) {
-        throw new Error(`El post con id ${id} no existe.`);
-    }
-    posts.splice(postIndex, 1);
-    await guardarPosts(posts);
-    return true;
-}
-export async function obtenerCategorias() {
-    const post = await cargarPosts();
-    const categorias = new Set();
-    post.forEach(post => {
-      if (post.categoría && !categorias.has(post.categoría)) {
-        categorias.add(post.categoría);
-      }
-    });
-    return Array.from(categorias);
-  }
