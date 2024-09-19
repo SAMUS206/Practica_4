@@ -40,6 +40,15 @@ function Trending() {
                     const commentsForPost = response.ok ? await response.json() : [];
                     initialComments[post.id] = commentsForPost;
                     post.commentCount = commentsForPost.length;
+
+                    // Fetch likes and users who liked the post
+                    const likesResponse = await fetch(`http://localhost:3000/posts/like/${post.id}`);
+                    const likesData = likesResponse.ok ? await likesResponse.json() : { likeCount: 0, likedUsers: [] };
+                    post.likes = likesData.likeCount;
+                    setLikedPosts(prev => ({
+                        ...prev,
+                        [post.id]: likesData.likedUsers
+                    }));
                 }));
 
                 setUsers(usersObj);
@@ -54,11 +63,11 @@ function Trending() {
                             headers: { 'Authorization': `Bearer ${localStorage.getItem('authToken')}` }
                         }).then(response => response.json().then(data => ({
                             postId: post.id,
-                            liked: data.likeCount > 0
+                            liked: data.likedUsers.includes(username)
                         })))
                     );
                     const likedPostsData = await Promise.all(likedPostsPromises);
-                    setLikedPosts(likedPostsData.reduce((acc, { postId, liked }) => {
+                    setLikedPosts(prev => likedPostsData.reduce((acc, { postId, liked }) => {
                         acc[postId] = liked;
                         return acc;
                     }, {}));
@@ -168,6 +177,7 @@ function Trending() {
                             >
                                 {post.likes} Me gusta
                             </button>
+                            <span className="like-users">Likes: {likedPosts[post.id]?.length || 0}</span>
                             <button
                                 className="comment-button"
                                 onClick={() => handleCommentClick(post.id)}
